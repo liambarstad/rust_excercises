@@ -50,8 +50,65 @@ fn main() {
         "{}, {}",
         is_num_present(absent_num),
         is_num_present(other_absent_num)
-    )
+    );
     // can't add an Option<i32> with an i32 b/c that's a dumb idea anyways
+
+    let dice_roll = 9;
+    match dice_roll {
+        3 => add_fancy_hat(),
+        7 => remove_fancy_hat(),
+        _ => reroll(),
+    }
+
+    fn add_fancy_hat() {}
+    fn remove_fancy_hat() {}
+    fn reroll() {}
+
+    // if let syntax for matching one value and ignoring the rest
+    let config_max = Some(3u8);
+
+    match config_max {
+        Some(thing) => println!("config max is {thing}: FULL MATCH"),
+        _ => (),
+    };
+
+    if let Some(max) = config_max {
+        println!("config max is {max}: IF LET")
+    };
+
+    // should only use if let if single expression
+    enum Something {
+        Text(String),
+        Number(i32),
+        Quit,
+    }
+
+    let something = Something::Text(String::from("Hello!"));
+
+    /*
+    don't do this:
+
+    if let Something::Text(text) = &message {
+        println!("Got a text message: {}", text);
+    } else if let Something::Number(num) = &message {
+        println!("Got a number: {}", num);
+    } else if let Something::Quit = &message {
+        println!("Got a quit message");
+    }
+    */
+    
+    // matching is idiomatic
+    match something {
+        Something::Text(text) => {
+            println!("Got a text message: {}", text);
+        }
+        Something::Number(num) => {
+            println!("Got a number: {}", num);
+        }
+        Something::Quit => {
+            println!("Got a quit message");
+        }
+    };
 
 }
 
